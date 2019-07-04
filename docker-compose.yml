@@ -1,21 +1,37 @@
-version: '3'
+version: "3"
+
+networks:
+  web:
+    external: true
+  internal:
+    external: false
 
 services:
   wp:
+    container_name: wordpress
     image: wordpress:5.2-php7.3
-    ports:
-      - 8080:80
     volumes:
       - ./themes/:/var/www/html/wp-content/themes/
       - ./plugins/:/var/www/html/wp-content/plugins/
     env_file:
       - .env
+    labels:
+      - traefik.backend=blog
+      - traefik.frontend.rule=Host:samyerkes.com
+      - traefik.docker.network=web
+      - traefik.port=80
+    networks:
+      - internal
+      - web
+    depends_on:
+      - mysql
 
   mysql:
+    container_name: wordpress-db
     image: mysql:5.7
-    ports:
-      - 4306:3306
     volumes:
       - ./db_data/:/var/lib/mysql/
-    env_file:
-      - .env
+    networks:
+      - internal
+    labels:
+      - traefik.enable=false
