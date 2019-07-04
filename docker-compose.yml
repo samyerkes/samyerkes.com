@@ -13,6 +13,7 @@ services:
     volumes:
       - ./themes/:/var/www/html/wp-content/themes/
       - ./plugins/:/var/www/html/wp-content/plugins/
+      - ./uploads/:/var/www/html/wp-content/uploads/
     env_file:
       - .env
     labels:
