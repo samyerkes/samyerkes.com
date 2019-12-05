@@ -9,7 +9,7 @@ networks:
 services:
   wp:
     container_name: wordpress
-    image: wordpress:5.3-php7.3
+    image: wordpress:5.3-php7.4
     volumes:
       - ./themes/:/var/www/html/wp-content/themes/
       - ./plugins/:/var/www/html/wp-content/plugins/
